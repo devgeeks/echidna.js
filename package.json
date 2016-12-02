@@ -1,0 +1,23 @@
+{
+  "name": "tweetnacl-pouchdb-thing",
+  "version": "0.1.0",
+  "description": "Crypton is dead, I want something else to replace it — Edit",
+  "main": "src/index.js",
+  "dependencies": {
+    "tweetnacl": "^0.14.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devgeeks/tweetnacl-pouchdb-thing.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devgeeks/tweetnacl-pouchdb-thing/issues"
+  },
+  "homepage": "https://github.com/devgeeks/tweetnacl-pouchdb-thing#readme"
+}
