@@ -4,8 +4,12 @@
   "description": "Crypton is dead, I want something else to replace it — Edit",
   "main": "src/index.js",
   "dependencies": {
+    "fast-sha256": "^1.0.0",
+    "install": "^0.8.2",
+    "npm": "^4.0.3",
     "pouchdb-browser": "^6.0.7",
-    "tweetnacl": "^0.14.3"
+    "tweetnacl": "^0.14.3",
+    "tweetnacl-util": "^0.13.3"
   },
   "devDependencies": {},
   "scripts": {
