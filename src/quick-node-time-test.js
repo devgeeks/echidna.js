@@ -29,7 +29,4 @@ console.time('encrypt orwell book');
 nonce = nacl.randomBytes(24);
 box = nacl.secretbox(nacl.util.decodeUTF8(book), nonce, key);
 console.timeEnd('encrypt orwell book');
-console.log('\n')
-console.log(nacl.util.encodeBase64(nonce));
-console.log(nacl.util.encodeBase64(box));
 console.log('\nNow thats a lot of data!');
