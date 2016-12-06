@@ -1,3 +1,5 @@
+var book = require('./data').book;
+
 var nacl = require('tweetnacl');
 nacl.util = require('tweetnacl-util');
 var sha256 = require('fast-sha256');
@@ -21,3 +23,13 @@ console.timeEnd('encrypt');
 console.log(nacl.util.encodeBase64(key));
 console.log(nacl.util.encodeBase64(nonce));
 console.log(nacl.util.encodeBase64(box));
+
+console.log('\n')
+console.time('encrypt orwell book');
+nonce = nacl.randomBytes(24);
+box = nacl.secretbox(nacl.util.decodeUTF8(book), nonce, key);
+console.timeEnd('encrypt orwell book');
+console.log('\n')
+console.log(nacl.util.encodeBase64(nonce));
+console.log(nacl.util.encodeBase64(box));
+console.log('\nNow thats a lot of data!');
