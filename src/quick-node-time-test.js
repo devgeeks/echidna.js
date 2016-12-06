@@ -1,5 +1,4 @@
 var book = require('./data').book;
-
 var nacl = require('tweetnacl');
 nacl.util = require('tweetnacl-util');
 var sha256 = require('fast-sha256');
@@ -24,7 +23,6 @@ console.log(nacl.util.encodeBase64(key));
 console.log(nacl.util.encodeBase64(nonce));
 console.log(nacl.util.encodeBase64(box));
 
-console.log('\n')
 console.time('Encrypt Thomas Paine Books');
 nonce = nacl.randomBytes(24);
 box = nacl.secretbox(nacl.util.decodeUTF8(book), nonce, key);
