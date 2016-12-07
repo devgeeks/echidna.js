@@ -9,6 +9,7 @@
     "npm": "^4.0.3",
     "pouchdb-browser": "^6.0.7",
     "pouchdb-node": "^6.0.7",
+    "transform-pouch": "^1.1.3",
     "tweetnacl": "^0.14.3",
     "tweetnacl-util": "^0.13.3"
   },
