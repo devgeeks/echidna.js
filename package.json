@@ -1,30 +1,43 @@
 {
-  "name": "tweetnacl-pouchdb-thing",
-  "version": "0.1.0",
-  "description": "Crypton is dead, I want something else to replace it — Edit",
-  "main": "src/index.js",
+  "name": "echidna.js",
+  "version": "0.0.1",
+  "description": "Crypton is dead, long live Echidna.js",
+  "main": "lib/index.js",
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "fast-sha256": "^1.0.0",
-    "install": "^0.8.2",
-    "npm": "^4.0.3",
     "pouchdb-browser": "^6.0.7",
     "pouchdb-node": "^6.0.7",
     "transform-pouch": "^1.1.3",
     "tweetnacl": "^0.14.3",
     "tweetnacl-util": "^0.13.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-es2015": "^6.24.0",
+    "eslint": "^3.17.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0"
+  },
   "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir lib",
+    "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devgeeks/tweetnacl-pouchdb-thing.git"
+    "url": "git+https://github.com/devgeeks/echidna.js.git"
   },
-  "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devgeeks/tweetnacl-pouchdb-thing/issues"
+    "url": "https://github.com/devgeeks/echidna.js/issues"
   },
-  "homepage": "https://github.com/devgeeks/tweetnacl-pouchdb-thing#readme"
+  "homepage": "https://github.com/devgeeks/echidna.js#readme",
+  "directories": {
+    "test": "test"
+  },
+  "author": "Tommy-Carlos Williams <tommy@devgeeks.org>"
 }
