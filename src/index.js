@@ -42,7 +42,7 @@ export default class Echidnajs {
     this.pouch = new PouchDB(`echidnadb-${username}`);
     this.pouch.transform({
       incoming(doc) {
-        // @TODO We NEED to dcheck the passphrase is correct before adding or modifying any items
+        // @TODO We NEED to check the passphrase is correct before adding or modifying any items
         const keys = Object.keys(doc);
         const newDoc = {};
         const nonce = generateNonce();
