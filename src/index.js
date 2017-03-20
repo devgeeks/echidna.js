@@ -4,12 +4,8 @@ import sha256 from 'fast-sha256';
 import PouchDB from 'pouchdb-browser';
 import TransformPouch from 'transform-pouch';
 
-import 'babel-polyfill';
-
 PouchDB.plugin(TransformPouch);
 nacl.util = naclUtil;
-window.naclUtil = naclUtil;
-window.sha256 = sha256;
 
 function encrypt(text, nonce, key) {
   const encText = nacl.secretbox(nacl.util.decodeUTF8(text), nonce, key);
@@ -37,16 +33,18 @@ export function keyFromPassphrase(passphrase, salt, rounds = 100000) {
 }
 
 export default class Echidnajs {
-  constructor(username, passphrase, salt, rounds = 100000) {
+  constructor({ username, passphrase, salt, rounds = 100000 }) {
+    if (!username || !passphrase || !salt) {
+      throw new Error('Missing required options');
+      return false;
+    }
     const key = keyFromPassphrase(passphrase, salt, rounds);
     this.pouch = new PouchDB(`echidnadb-${username}`);
     this.pouch.transform({
       incoming(doc) {
-        // @TODO We NEED to check the passphrase is correct before adding or modifying any items
         const keys = Object.keys(doc);
         const newDoc = {};
         const nonce = generateNonce();
-        // do something to the document before storage
         keys.forEach((field) => {
           if (field !== '_id' && field !== '_rev' && field !== 'nonce') {
             newDoc[field] = encrypt(doc[field], nonce, key);
@@ -58,7 +56,6 @@ export default class Echidnajs {
       outgoing(doc) {
         const keys = Object.keys(doc);
         const newDoc = {};
-        // do something to the document after retrieval
         let error;
         keys.forEach((field) => {
           if (field !== '_id' && field !== '_rev' && field !== 'nonce') {
