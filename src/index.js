@@ -2,7 +2,7 @@ import nacl from 'tweetnacl';
 import naclUtil from 'tweetnacl-util';
 import sha256 from 'fast-sha256';
 import TransformPouch from 'transform-pouch';
-import PouchDB from 'pouchdb-browser';
+import PouchDB from 'pouchdb';
 
 nacl.util = naclUtil;
 

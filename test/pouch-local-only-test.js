@@ -11,7 +11,7 @@ var key = sha256.pbkdf2(
   32
 );
 
-var PouchDB = require('pouchdb-node');
+var PouchDB = require('pouchdb');
 PouchDB.plugin(require('transform-pouch'));
 
 var pouch = new PouchDB('testlocal1');
