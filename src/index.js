@@ -72,8 +72,8 @@ export default class Echidnajs {
     });
   }
 
-  sync(remote) { // @TODO we will need more than this... 
-    return this.syncPouchDB.sync(remote);
+  sync(...args) { // @TODO we will need more than this... 
+    return this.syncPouchDB.sync(...args);
   }
 
   close() {
