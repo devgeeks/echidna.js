@@ -1,10 +1,9 @@
 import nacl from 'tweetnacl';
 import naclUtil from 'tweetnacl-util';
 import sha256 from 'fast-sha256';
-import PouchDB from 'pouchdb-browser';
 import TransformPouch from 'transform-pouch';
+import PouchDB from 'pouchdb-browser';
 
-PouchDB.plugin(TransformPouch);
 nacl.util = naclUtil;
 
 function encrypt(text, nonce, key) {
@@ -38,8 +37,11 @@ export default class Echidnajs {
       throw new Error('Missing required options');
       return false;
     }
+    PouchDB.plugin(TransformPouch);
     const key = keyFromPassphrase(passphrase, salt, rounds);
-    this.pouch = new PouchDB(`echidnadb-${username}`);
+    this.dbName = `echidnadb-${username}`;
+    this.syncPouchDB = new PouchDB(this.dbName);
+    this.pouch = new PouchDB(this.dbName);
     this.pouch.transform({
       incoming(doc) {
         const keys = Object.keys(doc);
@@ -68,5 +70,14 @@ export default class Echidnajs {
         return error || Object.assign(doc, newDoc);
       },
     });
+  }
+
+  sync(remote) { // @TODO we will need more than this... 
+    return this.syncPouchDB.sync(remote);
+  }
+
+  close() {
+    this.syncPouch.close();
+    this.pouch.close();
   }
 }
