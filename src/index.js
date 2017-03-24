@@ -40,7 +40,6 @@ export default class Echidnajs {
     PouchDB.plugin(TransformPouch);
     const key = keyFromPassphrase(passphrase, salt, rounds);
     this.dbName = `echidnadb-${username}`;
-    this.syncPouchDB = new PouchDB(this.dbName);
     this.pouch = new PouchDB(this.dbName);
     this.pouch.transform({
       incoming(doc) {
@@ -73,7 +72,8 @@ export default class Echidnajs {
   }
 
   sync(...args) { // @TODO we will need more than this... 
-    return this.syncPouchDB.sync(...args);
+    this.remote = this.remote || new PouchDB(this.dbName);
+    return this.remote.sync(...args);
   }
 
   close() {
