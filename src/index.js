@@ -77,7 +77,7 @@ export default class Echidnajs {
   }
 
   close() {
-    this.syncPouch.close();
+    this.remote.close();
     this.pouch.close();
   }
 }
