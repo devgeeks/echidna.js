@@ -71,7 +71,7 @@ export default class Echidnajs {
     });
   }
 
-  sync(...args) { // @TODO we will need more than this... 
+  sync(...args) {
     this.remote = this.remote || new PouchDB(this.dbName);
     return this.remote.sync(...args);
   }
