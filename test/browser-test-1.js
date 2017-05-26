@@ -20,7 +20,7 @@ console.log('completeGen', completeKeyGen);
 var pouch; //, pouchAlt;
 //document.addEventListener('load', function() {
   //console.log('device ready');
-  var PouchDB = require('pouchdb-browser');
+  var PouchDB = require('pouchdb');
   //PouchDB.plugin(require('pouchdb-adapter-cordova-sqlite'));
   PouchDB.plugin(require('transform-pouch'));
 
