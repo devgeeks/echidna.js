@@ -3,6 +3,7 @@ import naclUtil from 'tweetnacl-util';
 import sha256 from 'fast-sha256';
 import TransformPouch from 'transform-pouch';
 import PouchDB from 'pouchdb';
+import PouchDBFind from 'pouchdb-find';
 
 nacl.util = naclUtil;
 
@@ -37,6 +38,7 @@ export default class Echidnajs {
       throw new Error('Missing required options');
       return false;
     }
+    PouchDB.plugin(PouchDBFind);
     PouchDB.plugin(TransformPouch);
     const key = keyFromPassphrase(passphrase, salt, rounds);
     this.dbName = `echidnadb-${username}`;
@@ -79,5 +81,6 @@ export default class Echidnajs {
   close() {
     this.remote.close();
     this.pouch.close();
+    console.log('closed');
   }
 }
