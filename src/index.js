@@ -57,6 +57,7 @@ export default class Echidnajs {
         return Object.assign(doc, newDoc);
       },
       outgoing(doc) {
+        console.log('outgoing', doc, new Date());
         const keys = Object.keys(doc);
         const newDoc = {};
         let error;

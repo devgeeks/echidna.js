@@ -20,12 +20,13 @@
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.0"
+    "eslint-plugin-react": "^6.10.0",
+    "rimraf": "^2.6.1"
   },
   "scripts": {
     "build": "babel src --presets babel-preset-es2015 --out-dir lib",
     "prepublish": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/node-test/test.js"
   },
   "repository": {
     "type": "git",
