@@ -57,7 +57,6 @@ export default class Echidnajs {
         return Object.assign(doc, newDoc);
       },
       outgoing(doc) {
-        console.log('outgoing', doc, new Date());
         const keys = Object.keys(doc);
         const newDoc = {};
         let error;
@@ -87,6 +86,6 @@ export default class Echidnajs {
   close() {
     this.remote.close();
     this.pouch.close();
-    console.log('closed');
+    // console.log('closed');
   }
 }
