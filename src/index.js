@@ -79,6 +79,11 @@ export default class Echidnajs {
     return this.remote.sync(...args);
   }
 
+  hash(text) {
+    const hash = nacl.hash(nacl.util.decodeUTF8(text));
+    return nacl.util.encodeBase64(hash);
+  }
+
   close() {
     this.remote.close();
     this.pouch.close();
