@@ -1,20 +1,22 @@
-var rimraf = require('rimraf');
-var EchidnaDB = require('../../lib').default;
-var setup = require('./setup');
+const rimraf = require('rimraf');
+const EchidnaDB = require('../../lib').default;
+const setup = require('./setup');
 
 function error (error) {
     console.log(error);
+    console.log('<< REMOVING TEST POUCH >>');
     rimraf('echidnadb-myusername', ()  => console.log('complete'));
 }
 
 setup()
 .then(res => {
-    var options = {
+    const options = {
         username: 'myusername',
         passphrase: 'mypassphrase',
         salt: 'saltysaltysalty'
     };
-    var echidna = new EchidnaDB(options);
+    console.log('<< CREATING TEST POUCH >>');
+    const echidna = new EchidnaDB(options);
 
     echidna.pouch.info()
     .then(result => {
@@ -22,10 +24,9 @@ setup()
         echidna.pouch.get('test')
         .then(res => {
             console.log(res);
+            console.log('<< REMOVING TEST POUCH >>');
             rimraf('echidnadb-myusername', ()  => console.log('complete'));
-        })
-        .catch(error);
-    })
-    .catch(error);
+        });
+    });
 })
 .catch(error);

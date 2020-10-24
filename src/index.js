@@ -25,15 +25,12 @@ export function generateNonce() {
 }
 
 export function keyFromPassphrase(passphrase, salt, rounds = 100000) {
-  const key = sha256.pbkdf2(
-    nacl.util.decodeUTF8(passphrase),
-    nacl.util.decodeUTF8(salt),
-    rounds, 32);
+  const key = sha256.pbkdf2(nacl.util.decodeUTF8(passphrase), nacl.util.decodeUTF8(salt), rounds, 32);
   return key;
 }
 
 export default class Echidnajs {
-  constructor({ username, passphrase, salt, rounds = 100000 }) {
+  constructor({username, passphrase, salt, rounds = 100000}) {
     if (!username || !passphrase || !salt) {
       throw new Error('Missing required options');
       return false;

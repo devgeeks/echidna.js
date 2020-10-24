@@ -1,5 +1,7 @@
 var book = require('./data').book;
 var nacl = require('tweetnacl');
+var fs = require('fs');
+var file = fs.readFileSync('./tommy-carlos--williams.png', "utf8");
 nacl.util = require('tweetnacl-util');
 var sha256 = require('fast-sha256');
 
@@ -28,3 +30,10 @@ nonce = nacl.randomBytes(24);
 box = nacl.secretbox(nacl.util.decodeUTF8(book), nonce, key);
 console.timeEnd('Encrypt Thomas Paine Books');
 console.log('\nNow thats a lot of data!');
+
+
+console.time('Encrypt Image');
+nonce = nacl.randomBytes(24);
+box = nacl.secretbox(nacl.util.decodeUTF8(file), nonce, key);
+console.timeEnd('Encrypt Image');
+console.log('\nNow thats a lot more data!');
