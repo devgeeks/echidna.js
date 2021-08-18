@@ -4,7 +4,7 @@
   "description": "Crypton is dead, long live Echidna.js",
   "main": "lib/index.js",
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
+    "@babel/polyfill": "^7.12.1",
     "core-js": "^3.6.5",
     "fast-sha256": "^1.3.0",
     "pouchdb": "^7.2.2",
@@ -14,9 +14,9 @@
     "tweetnacl-util": "^0.15.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.0",
-    "@babel/cli": "^7.12.0",
-    "@babel/preset-env": "^7.12.0",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
     "rimraf": "^3.0.2"
   },
   "scripts": {
