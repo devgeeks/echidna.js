@@ -1,23 +1,25 @@
 import nacl from 'tweetnacl';
-import naclUtil from 'tweetnacl-util';
+// import naclUtil from 'tweetnacl-util';
+import {encode as encodeUTF8, decode as decodeUTF8} from '@stablelib/utf8';
+import {decode as decodeBase64, encode as encodeBase64} from '@stablelib/base64';
 import sha256 from 'fast-sha256';
 import TransformPouch from 'transform-pouch';
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 
-nacl.util = naclUtil;
+// nacl.util = naclUtil;
 
 function encrypt(text, nonce, key) {
-  const encText = nacl.secretbox(nacl.util.decodeUTF8(text), nonce, key);
-  return nacl.util.encodeBase64(encText);
+  const encText = nacl.secretbox(encodeUTF8(text), nonce, key);
+  return encodeBase64(encText);
 }
 
 function decrypt(text, nonce, key) {
-  const decText = nacl.secretbox.open(nacl.util.decodeBase64(text), nonce, key);
+  const decText = nacl.secretbox.open(decodeBase64(text), nonce, key);
   if (decText === null) {
     return undefined;
   }
-  return nacl.util.encodeUTF8(decText);
+  return decodeUTF8(decText);
 }
 
 export function generateNonce() {
@@ -25,7 +27,7 @@ export function generateNonce() {
 }
 
 export function keyFromPassphrase(passphrase, salt, rounds = 100000) {
-  const key = sha256.pbkdf2(nacl.util.decodeUTF8(passphrase), nacl.util.decodeUTF8(salt), rounds, 32);
+  const key = sha256.pbkdf2(encodeUTF8(passphrase), encodeUTF8(salt), rounds, 32);
   return key;
 }
 
@@ -50,7 +52,7 @@ export default class Echidnajs {
             newDoc[field] = encrypt(doc[field], nonce, key);
           }
         });
-        newDoc.nonce = nacl.util.encodeBase64(nonce);
+        newDoc.nonce = encodeBase64(nonce);
         return Object.assign(doc, newDoc);
       },
       outgoing(doc) {
@@ -59,7 +61,7 @@ export default class Echidnajs {
         let error;
         keys.forEach((field) => {
           if (field !== '_id' && field !== '_rev' && field !== 'nonce') {
-            newDoc[field] = decrypt(doc[field], nacl.util.decodeBase64(doc.nonce), key);
+            newDoc[field] = decrypt(doc[field], decodeBase64(doc.nonce), key);
             if (newDoc[field] === undefined) {
               error = new Error('Failed to decrypt');
             }
@@ -76,8 +78,8 @@ export default class Echidnajs {
   }
 
   hash(text) {
-    const hash = nacl.hash(nacl.util.decodeUTF8(text));
-    return nacl.util.encodeBase64(hash);
+    const hash = nacl.hash(encodeUTF8(text));
+    return encodeBase64(hash);
   }
 
   close() {
