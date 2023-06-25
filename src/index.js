@@ -1,13 +1,10 @@
 import nacl from 'tweetnacl';
-// import naclUtil from 'tweetnacl-util';
 import {encode as encodeUTF8, decode as decodeUTF8} from '@stablelib/utf8';
 import {decode as decodeBase64, encode as encodeBase64} from '@stablelib/base64';
 import sha256 from 'fast-sha256';
 import TransformPouch from 'transform-pouch';
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
-
-// nacl.util = naclUtil;
 
 function encrypt(text, nonce, key) {
   const encText = nacl.secretbox(encodeUTF8(text), nonce, key);
@@ -35,7 +32,6 @@ export default class Echidnajs {
   constructor({username, passphrase, salt, rounds = 100000}) {
     if (!username || !passphrase || !salt) {
       throw new Error('Missing required options');
-      return false;
     }
     PouchDB.plugin(PouchDBFind);
     PouchDB.plugin(TransformPouch);
@@ -53,21 +49,21 @@ export default class Echidnajs {
           }
         });
         newDoc.nonce = encodeBase64(nonce);
-        return Object.assign(doc, newDoc);
+        return Object.assign({}, doc, newDoc);
       },
       outgoing(doc) {
         const keys = Object.keys(doc);
         const newDoc = {};
-        let error;
+        const errors = [];
         keys.forEach((field) => {
           if (field !== '_id' && field !== '_rev' && field !== 'nonce') {
             newDoc[field] = decrypt(doc[field], decodeBase64(doc.nonce), key);
             if (newDoc[field] === undefined) {
-              error = new Error('Failed to decrypt');
+              errors.push(new Error('Failed to decrypt'));
             }
           }
         });
-        return error || Object.assign(doc, newDoc);
+        return errors?.length ? errors : Object.assign({}, doc, newDoc);
       },
     });
   }
@@ -85,6 +81,5 @@ export default class Echidnajs {
   close() {
     this.remote.close();
     this.pouch.close();
-    // console.log('closed');
   }
 }
